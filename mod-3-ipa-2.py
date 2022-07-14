@@ -290,7 +290,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 12,
+   "execution_count": 1,
    "id": "120bd7db-3cc8-4269-ac1a-d5557f974f62",
    "metadata": {},
    "outputs": [],
@@ -327,22 +327,22 @@
     "    else: \n",
     "        for i in range(len(message) -len(key)): \n",
     "            key.append(key[i % len(key)]) \n",
-    "            return(\"\" . join(key)) "
+    "        return(\"\" . join(key)) "
    ]
   },
   {
    "cell_type": "code",
-   "execution_count": 13,
+   "execution_count": 6,
    "id": "e47b85d2-77c9-45ee-9a89-f6405e0b7bc6",
    "metadata": {},
    "outputs": [
     {
      "data": {
       "text/plain": [
-       "'KEYK'"
+       "'KEYKEYKE'"
       ]
      },
-     "execution_count": 13,
+     "execution_count": 6,
      "metadata": {},
      "output_type": "execute_result"
     }
@@ -353,17 +353,17 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 14,
+   "execution_count": 3,
    "id": "452676b9-ee0a-42a3-958f-c8b141254ca8",
    "metadata": {},
    "outputs": [
     {
      "data": {
       "text/plain": [
-       "'PLAYP'"
+       "'PLAYPLAYP'"
       ]
      },
-     "execution_count": 14,
+     "execution_count": 3,
      "metadata": {},
      "output_type": "execute_result"
     }
@@ -374,7 +374,28 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 15,
+   "execution_count": 4,
+   "id": "a2f7ab6d-38b7-4b3c-8776-c1d3877cc0ea",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "['K', 'E', 'Y']"
+      ]
+     },
+     "execution_count": 4,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "vigenere_cipher(\"A C\",\"KEY\")"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 37,
    "id": "525fd40c-f347-4291-aed5-88e27bb4f5e3",
    "metadata": {},
    "outputs": [],
@@ -424,20 +445,25 @@
     "        the encoded message\n",
     "    '''\n",
     "    n = len(message)\n",
-    "    columns = n // shift\n",
+    "    \n",
+    "    if n%shift !=0:\n",
+    "        while n%shift !=0:\n",
+    "            message = message + '_'\n",
+    "            n = len(message)\n",
+    "    \n",
     "    ciphertext = ['_'] * n\n",
-    "    for i in range(n):\n",
-    "        row = i//columns\n",
-    "        col = i % columns\n",
-    "        ciphertext[col * shift + row] = message[i]\n",
-    "        \n",
+    "    \n",
+    "    for i in range (n):\n",
+    "        index = (i//shift) + (n//shift) * (i%shift)\n",
+    "        ciphertext[i] = message[index]\n",
     "    return \"\".join(ciphertext)\n",
+    "\n",
     "    "
    ]
   },
   {
    "cell_type": "code",
-   "execution_count": 16,
+   "execution_count": 21,
    "id": "c2c941fe-8aa6-4d3d-aa69-922367a47465",
    "metadata": {},
    "outputs": [
@@ -447,7 +473,7 @@
        "'IMNNA_FTAOIGROE'"
       ]
      },
-     "execution_count": 16,
+     "execution_count": 21,
      "metadata": {},
      "output_type": "execute_result"
     }
@@ -458,15 +484,91 @@
   },
   {
    "cell_type": "code",
-   "execution_count": null,
+   "execution_count": 22,
    "id": "d239371d-617b-4848-8fd8-6f65608ea07b",
    "metadata": {},
-   "outputs": [],
-   "source": []
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "'IFRAINAENOMTO_G_'"
+      ]
+     },
+     "execution_count": 22,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "scytale_cipher(\"INFORMATION_AGE\", 8)"
+   ]
   },
   {
    "cell_type": "code",
-   "execution_count": 17,
+   "execution_count": 23,
+   "id": "30e1275b-6037-4c0e-a769-60605bf8abd4",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "'MEIG_ETN__'"
+      ]
+     },
+     "execution_count": 23,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "scytale_cipher(\"MEETING\", 5)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 38,
+   "id": "b731feee-1f3c-48c7-b10e-42a96bc21b6a",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "'PS_T_LEW_AE_AA_AINN_'"
+      ]
+     },
+     "execution_count": 38,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "scytale_cipher(\"PLEASE_I_WANT_AN_A\", 5)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 33,
+   "id": "95feb42e-6d31-4146-8df0-8db3d9739cf3",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "'PAEADLVC_N_OE_'"
+      ]
+     },
+     "execution_count": 33,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "scytale_cipher(\"PEACE_AND_LOVE\", 6)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 25,
    "id": "14e2b22c-9bf4-4c75-add6-fa022484c969",
    "metadata": {},
    "outputs": [],
@@ -552,8 +654,79 @@
   },
   {
    "cell_type": "code",
-   "execution_count": null,
+   "execution_count": 26,
    "id": "71f2b043-1c32-4b8d-ad45-82b2225f85d7",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "'MEETING___'"
+      ]
+     },
+     "execution_count": 26,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "scytale_decipher(\"MEIG_ETN__\", 5)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 36,
+   "id": "175330cb-6bf3-47ef-8265-71bbecd8a786",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "'PLEASE_I_WANT_AN_A__'"
+      ]
+     },
+     "execution_count": 36,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "scytale_decipher(\"PS_T_LEW_AE_AA_AINN_\", 5)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 31,
+   "id": "a253b4cf-5652-4df3-8870-3b8d60287f16",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "'PEACE_AND_LOVE'"
+      ]
+     },
+     "execution_count": 31,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "scytale_decipher(\"PAEADLVEC_N_OE\", 7)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "38e7136f-124f-4c59-a7e9-75e5e6dc7d9c",
+   "metadata": {},
+   "outputs": [],
+   "source": []
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "8feec745-c95c-4598-a7ad-98e5eaa7a5cc",
    "metadata": {},
    "outputs": [],
    "source": []
