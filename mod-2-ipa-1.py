@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[1]:
+# In[11]:
 
 
 def savings(gross_pay, tax_rate, expenses):
@@ -29,22 +29,22 @@ def savings(gross_pay, tax_rate, expenses):
     int
         the number of centavos remaining from an employee's pay after taxes and expenses
     '''
-    return int((((gross_pay - (gross_pay * tax_rate)) - expenses))*100)
+    return int((((gross_pay - (gross_pay * tax_rate)) - expenses)))
 
 
-# In[2]:
+# In[12]:
 
 
 savings(100,0.07,25)
 
 
-# In[3]:
+# In[13]:
 
 
 savings(1000,0.27,205)
 
 
-# In[4]:
+# In[14]:
 
 
 savings(123,0.12,13)
@@ -90,7 +90,7 @@ interest(100,21,4)
 interest(234,0.6,7)
 
 
-# In[8]:
+# In[15]:
 
 
 def body_mass_index(weight, height):
@@ -119,16 +119,16 @@ def body_mass_index(weight, height):
         the BMI of the person.
     '''
     
-    return float(((weight/2.2) / ((height[0]*(12*2.54)) * (height[1]*2.54))))
+    return float((weight/2.205) / ((height[0]/(3.281)) + (height[1]/39.37))**2)
 
 
-# In[9]:
+# In[16]:
 
 
 body_mass_index(107, [5, 2])
 
 
-# In[10]:
+# In[17]:
 
 
 body_mass_index(150, [6, 2])

@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[1]:
+# In[2]:
 
 
 def shift_letter(letter, shift):
@@ -33,33 +33,42 @@ def shift_letter(letter, shift):
         a single space if the original letter was a space.
     '''
     ret = ""
-    if (letter.isupper()):
-        ret = chr((ord(letter) + shift - 65 )%26 + 65);
+    if letter == ' ':
+        return " "
     else:
-        ret = chr((ord(letter) + shift - 97)%26 + 97);
+        if (letter.isupper()):
+            ret = chr((ord(letter) + shift - 65 )%26 + 65);
+        else:
+            ret = chr((ord(letter) + shift - 97)%26 + 97);
         
     return ret;
-
-
-# In[2]:
-
-
-shift_letter("H",3)
 
 
 # In[3]:
 
 
-shift_letter("X",5)
+shift_letter("H",3)
 
 
 # In[4]:
 
 
-shift_letter("J",26)
+shift_letter("X",5)
 
 
 # In[5]:
+
+
+shift_letter("J",26)
+
+
+# In[7]:
+
+
+shift_letter(" ",26)
+
+
+# In[17]:
 
 
 def caesar_cipher(message, shift):
@@ -79,25 +88,34 @@ def caesar_cipher(message, shift):
         the message, shifted appropriately.
     '''
     
-   
-    ret = ""
-    i = 0
-    for i in range(len(message)):
-        if (message[i].isupper()):
-            ret += chr((ord(message[i]) + shift -65) % 26 + 65)
+    cipher = ''
+    alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+
+    for i in message:
+        if i == ' ':
+            cipher += " "
         else:
-            ret += chr((ord(message[i]) + shift - 97) % 26 + 97)
-        
-    return ret
+            if alphabet.index(i) + shift < 26:
+                cipher += alphabet[alphabet.index(i) + shift]
+            else:
+                cipher += alphabet[alphabet.index(i) + shift]%26
+            
+    return cipher
 
 
-# In[6]:
+# In[20]:
+
+
+caesar_cipher(" ",7)
+
+
+# In[21]:
 
 
 caesar_cipher("POLI",7)
 
 
-# In[7]:
+# In[22]:
 
 
 caesar_cipher("PING",4)
@@ -130,10 +148,14 @@ def shift_by_letter(letter, letter_shift):
         the letter, shifted appropriately.
     '''
     ret = ""
-    if (letter.isupper()):
-        ret = chr((ord(letter) + ord(letter_shift))%26 + 65);
-    else:
-        ret = chr((ord(letter) + ord(letter_shift))%26 + 97);
+    
+    if letter == ' ':
+        return " "
+    else: 
+        if (letter.isupper()):
+            ret = chr((ord(letter) + ord(letter_shift))%26 + 65);
+        else:
+            ret = chr((ord(letter) + ord(letter_shift))%26 + 97);
         
     return ret;
 
@@ -156,7 +178,13 @@ shift_by_letter("B", "K")
 shift_by_letter("A", "A")
 
 
-# In[1]:
+# In[12]:
+
+
+shift_by_letter(" ", "A")
+
+
+# In[28]:
 
 
 def vigenere_cipher(message, key):
@@ -185,34 +213,43 @@ def vigenere_cipher(message, key):
         the message, shifted appropriately.
     '''
 def vigenere_cipher(message, key): 
-    key = list(key) 
-    if len(message) == len(key): 
-        return(key) 
-    else: 
-        for i in range(len(message) -len(key)): 
-            key.append(key[i % len(key)]) 
-        return("" . join(key)) 
+
+    ret = ''
+    newkey = [ord(i) for i in key]
+    newmessage = [ord(i) for i in message]
+    
+    for i in range(len(newmessage)):
+                   if message[i].isalpha():
+                       ret += chr(((newmessage[i] + newkey[i %len(key)])%26) + 65)
+                   else:
+                       ret += message[i]
+                   
+    return ret
+                   
+                   
+                   
+                   
 
 
-# In[6]:
+# In[29]:
 
 
 vigenere_cipher("LONGTEXT","KEY")
 
 
-# In[3]:
+# In[30]:
 
 
 vigenere_cipher("HAPPINESS","PLAY")
 
 
-# In[4]:
+# In[31]:
 
 
 vigenere_cipher("A C","KEY")
 
 
-# In[37]:
+# In[59]:
 
 
 def scytale_cipher(message, shift):
@@ -259,36 +296,35 @@ def scytale_cipher(message, shift):
     str
         the encoded message
     '''
+    
+    
+def scytale_cipher(message, shift):
     n = len(message)
-    
-    if n%shift !=0:
-        while n%shift !=0:
-            message = message + '_'
-            n = len(message)
-    
+    columns = n // shift
     ciphertext = ['_'] * n
-    
-    for i in range (n):
-        index = (i//shift) + (n//shift) * (i%shift)
-        ciphertext[i] = message[index]
+    for i in range(n):
+        row = i//columns
+        col = i % columns
+        ciphertext[col * shift + row] = message[i]
+        
     return "".join(ciphertext)
 
     
 
 
-# In[21]:
+# In[49]:
 
 
 scytale_cipher("INFORMATION_AGE", 3)
 
 
-# In[22]:
+# In[57]:
 
 
-scytale_cipher("INFORMATION_AGE", 8)
+scytale_cipher("INFORMATION_AGE", 6)
 
 
-# In[23]:
+# In[54]:
 
 
 scytale_cipher("MEETING", 5)
@@ -300,10 +336,10 @@ scytale_cipher("MEETING", 5)
 scytale_cipher("PLEASE_I_WANT_AN_A", 5)
 
 
-# In[33]:
+# In[53]:
 
 
-scytale_cipher("PEACE_AND_LOVE", 6)
+scytale_cipher("PEACE_AND_LOVE", 7)
 
 
 # In[25]:
@@ -380,6 +416,26 @@ scytale_decipher("PAEADLVEC_N_OE", 7)
 
 
 
+
+
+# In[45]:
+
+
+n = len(message)
+   
+   if n %shift == 0:
+       ret = [''] * n
+       for i in range(n):
+           message[i] = ret[(i %(n // shift) * shift + (i // (n // shift)))]
+       return "".join(ret)
+   else:
+       underscore = '_'
+       mixer = message + ''.join([char * (shift - n %shift) for char in underscore])
+       ret = len(mixer) * ['-']
+       for i in range(len(mixer)):
+           mixer[i] = ret[(i %(len(mixer) // shift) * shift + (i // len(mixer)))]
+   
+   return "".join(ret)
 
 
 # In[ ]:
