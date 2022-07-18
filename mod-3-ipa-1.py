@@ -184,7 +184,7 @@ shift_by_letter("A", "A")
 shift_by_letter(" ", "A")
 
 
-# In[28]:
+# In[60]:
 
 
 def vigenere_cipher(message, key):
@@ -219,10 +219,10 @@ def vigenere_cipher(message, key):
     newmessage = [ord(i) for i in message]
     
     for i in range(len(newmessage)):
-                   if message[i].isalpha():
-                       ret += chr(((newmessage[i] + newkey[i %len(key)])%26) + 65)
-                   else:
-                       ret += message[i]
+        if message[i].isalpha():
+            ret += chr(((newmessage[i] + newkey[i %len(key)])%26) + 65)
+        else:
+            ret += message[i]
                    
     return ret
                    
@@ -231,13 +231,13 @@ def vigenere_cipher(message, key):
                    
 
 
-# In[29]:
+# In[61]:
 
 
 vigenere_cipher("LONGTEXT","KEY")
 
 
-# In[30]:
+# In[62]:
 
 
 vigenere_cipher("HAPPINESS","PLAY")
@@ -249,7 +249,7 @@ vigenere_cipher("HAPPINESS","PLAY")
 vigenere_cipher("A C","KEY")
 
 
-# In[59]:
+# In[100]:
 
 
 def scytale_cipher(message, shift):
@@ -298,6 +298,9 @@ def scytale_cipher(message, shift):
     '''
     
     
+'''
+this is wrong, but im still disecting why, so please ignore this 
+
 def scytale_cipher(message, shift):
     n = len(message)
     columns = n // shift
@@ -308,29 +311,53 @@ def scytale_cipher(message, shift):
         ciphertext[col * shift + row] = message[i]
         
     return "".join(ciphertext)
+'''
 
+
+def scytale_cipher(message, shift):
+
+    if len(message) %shift == 0:
+        n = len(message)
+        ret = [''] * n
+        for i in range(n):
+            ret[(i %(n // shift)) * shift + (i // (n // shift))] = message[i]
+        return "".join(ret)
+    else:
+        n = len(message)
+        underscore = '_'
+        mix = message + ''.join([char * (shift - (n % shift)) for char in underscore])
+        ret = len(mix) * ['-']
+        for i in range(len(mix)):
+            ret[(i %(len(mix) // shift)) * shift + (i //(len(mix) // shift))] = mix[i]
+        return "".join(ret)
     
 
 
-# In[49]:
+# In[101]:
+
+
+scytale_cipher(" ", 3)
+
+
+# In[94]:
 
 
 scytale_cipher("INFORMATION_AGE", 3)
 
 
-# In[57]:
+# In[95]:
 
 
 scytale_cipher("INFORMATION_AGE", 6)
 
 
-# In[54]:
+# In[96]:
 
 
 scytale_cipher("MEETING", 5)
 
 
-# In[38]:
+# In[97]:
 
 
 scytale_cipher("PLEASE_I_WANT_AN_A", 5)
@@ -418,24 +445,70 @@ scytale_decipher("PAEADLVEC_N_OE", 7)
 
 
 
-# In[45]:
+# In[ ]:
 
 
-n = len(message)
-   
-   if n %shift == 0:
-       ret = [''] * n
-       for i in range(n):
-           message[i] = ret[(i %(n // shift) * shift + (i // (n // shift)))]
-       return "".join(ret)
-   else:
-       underscore = '_'
-       mixer = message + ''.join([char * (shift - n %shift) for char in underscore])
-       ret = len(mixer) * ['-']
-       for i in range(len(mixer)):
-           mixer[i] = ret[(i %(len(mixer) // shift) * shift + (i // len(mixer)))]
-   
-   return "".join(ret)
+
+
+
+# In[ ]:
+
+
+
+
+
+# In[ ]:
+
+
+
+
+
+# In[ ]:
+
+
+
+
+
+# In[ ]:
+
+
+
+
+
+# In[ ]:
+
+
+
+
+
+# In[ ]:
+
+
+
+
+
+# In[ ]:
+
+
+
+
+
+# In[ ]:
+
+
+
+
+
+# In[ ]:
+
+
+
+
+
+# In[ ]:
+
+
+
 
 
 # In[ ]:
